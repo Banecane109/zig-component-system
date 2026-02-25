@@ -37,10 +37,17 @@ pub fn SharedRef(comptime T: type) type {
             return .{ .ref_object = ref_object };
         }
 
-        /// Returns reference to object
-        pub fn get(self: Self) *T {
+        /// ### Returns
+        /// - `*T` : pointer to object
+        pub fn getPtr(self: Self) *T {
             self.ref_object.count.fetchAdd(1, .SeqCst);
             return self.ref_object.ptr;
+        }
+
+        /// ### Returns
+        /// - `usize` : current reference count
+        pub fn getCurrentRefCount(self: Self) usize {
+            return self.ref_object.count.load(.seq_cst);
         }
 
         /// Releases reference to object
