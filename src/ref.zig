@@ -40,7 +40,7 @@ pub fn SharedRef(comptime T: type) type {
         /// ### Returns
         /// - `*T` : pointer to object
         pub fn getPtr(self: Self) *T {
-            self.ref_object.count.fetchAdd(1, .SeqCst);
+            self.ref_object.count.fetchAdd(1, .seq_cst);
             return self.ref_object.ptr;
         }
 
